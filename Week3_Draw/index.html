@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="p5.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+
+  </head>
+  <body>
+    <div id="descriptionDiv">
+    <h1>Let's Draw!</h1>
+    <h2>Click on the canvas to draw</h2>
+    <p>write a hex code to change the color of the circle
+      <br>
+    If you don't know the hex code of your favorite color at the moment, click the color picker box and get the code!
+    <br>
+  </p>
+    <div>
+    <input type="text" name="custom_color" placeholder="#FFFFFF" id="pickcolor" class="call-picker" />
+    <!-- <label for="colorpicker">Color Picker:</label> -->
+    <input type="color" id="colorpicker2" class="colorpreview" value="#FFFFFF">
+    <button id="color-btn" class="abBtn">Apply</button>
+  <br>
+  <input type="text" name="radius" placeholder="30" id="pickradius" class="radius-picker" />
+  <button id="radius-btn">Change radius</button>
+</div>
+</div>
+<button id="resetCanvas-btn" class="reBtn">Reset the Canvas</button>
+  <main>
+  </main>
+  <div class="center">
+    <script src="sketch.js"></script>
+  </div>
+  </body>
+</html>

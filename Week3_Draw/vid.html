@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="p5.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+    <script type="text/javascript">
+
+        window.addEventListener('load', function() {
+          // The video element on the page to display the webcam
+          var video = document.getElementById('thevideo');
+    
+          // Constraints - what do we want?
+          let constraints = { audio: false, video: true };
+    
+          // Prompt the user for permission, get the stream
+          navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+              /* Use the stream */
+    
+              // Attach to our video object
+              video.srcObject = stream;
+    
+              // Wait for the stream to load enough to play
+              video.onloadedmetadata = function(e) {
+                  video.play();
+              draw();
+    
+              };
+          })
+          .catch(function(err) {
+              /* Handle the error */
+              alert(err);
+          });
+    
+          // Canvas element on the page
+          var thecanvas = document.getElementById('thecanvas');
+          console.log(thecanvas);
+          var thecontext = thecanvas.getContext('2d');
+          console.log(thecontext);
+          console.log(video);
+          var draw = function() {
+            console.log("It should be drawing!");
+              // Draw the video onto the canvas
+              thecontext.drawImage(video,0,0,video.width,video.height);
+    
+            var dataUrl = thecanvas.toDataURL();
+            console.log(dataUrl);
+    
+            socket.emit('dataurl',dataUrl);
+    
+              // document.getElementById('imagefile').src = dataUrl;
+    
+              // Draw again in 3 seconds
+              setTimeout(draw,3000);
+          };
+    
+    
+          thecanvas.addEventListener('mousemove', function(e) {
+            console.log(e.x, e.y);
+            socket.emit('coordinates', {x: e.x, y: e.y});
+          });
+    
+    
+        });
+    
+    
+        var socket = io.connect();
+        socket.on('connect', function() {
+          console.log("Connected");
+        });
+    
+        socket.on('coordinates', function(data) {
+          document.getElementById('thediv').style.position = "absolute";
+          document.getElementById('thediv').style.top = data.x + "px";
+          document.getElementById('thediv').style.left = data.y + "px";
+        });
+    
+        socket.on('dataurl', function(data) {
+          console.log("Got Data");
+          //var theimage = document.getElementById('theimage');
+    
+          var theimage = document.createElement("img");
+          theimage.src = data;
+          document.body.appendChild(theimage);
+    
+        });
+    
+    
+    
+      </script>
+
+  </head>
+  <body>
+    <div id="descriptionDiv">
+    <h1>Let's Draw!</h1>
+    <h2>Click on the canvas to draw</h2>
+    <p>write a hex code to change the color of the circle
+      <br>
+    If you don't know the hex code of your favorite color at the moment, click the color picker box and get the code!
+    <br>
+  </p>
+    <div>
+    <input type="text" name="custom_color" placeholder="#FFFFFF" id="pickcolor" class="call-picker" />
+    <!-- <label for="colorpicker">Color Picker:</label> -->
+    <input type="color" id="colorpicker2" class="colorpreview" value="#FFFFFF">
+    <video id="thevideo" height="48" width="72"></video>
+    <button id="color-btn" class="abBtn">Apply</button>
+  <br>
+  <input type="text" name="radius" placeholder="30" id="pickradius" class="radius-picker" />
+  <button id="radius-btn">Change radius</button>
+</div>
+</div>
+<button id="resetCanvas-btn" class="reBtn">Reset the Canvas</button>
+  <main>
+  </main>
+  <div class="center">
+    <script src="sketch.js"></script>
+  </div>
+  </body>
+</html>
