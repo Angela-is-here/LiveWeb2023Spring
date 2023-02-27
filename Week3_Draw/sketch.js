@@ -1,18 +1,22 @@
+// check the connection with the server
+
 var socket = io.connect();
 			
 socket.on('connect', function() {
   console.log("Connected" + socket.id);
 });
 
+//get mouseX and mouseY data
 socket.on('mouse', function(mouseData){
   x = mouseData.x;
   y = mouseData.y;
 })
 
+//set the default colorand size of the brush
 let color = '#FFF';
 let radiusSize = 30;
 
-
+//set the window-sized canvas with black background
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(10);
@@ -35,6 +39,7 @@ function setup() {
 		else {console.log('Enter a valid hex value')}
 	})
 
+//change rediusSize with the value of the redius picker input text
   radius_btn.mousePressed(() => {
     const sizeRad = parseInt(radius_picker.value())
     if (sizeRad > 0) {
@@ -42,17 +47,19 @@ function setup() {
     }
     console.log(sizeRad);
    })
-  
+
+//reset canvas when reset button is pressed
    re_btn.mousePressed(() => {
     background(10);
     })
 }
 
 
-
+//we don't need to call sth on draw() function this time
 function draw() {
 }
 
+//if a mouse is dragged, receive data from socket.io (position, radius and color) to update the data and draw an ellipse correspoinding with data.
 function mouseDragged() {
   var data = {
     x : mouseX,
@@ -70,6 +77,7 @@ function mouseDragged() {
   ellipse(x, y, radiusSize, radiusSize);
 }
 
+//reset all with bg color update
 function resetAll() {
   background(10);
 }
