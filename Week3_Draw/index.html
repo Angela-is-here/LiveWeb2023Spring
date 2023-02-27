@@ -12,6 +12,7 @@
 
   </head>
   <body>
+//div for discription
     <div id="descriptionDiv">
     <h1>Let's Draw!</h1>
     <h2>Click on the canvas to draw</h2>
@@ -21,18 +22,27 @@
     <br>
   </p>
     <div>
+	    
+//for color input, i made text input for HEX code change and color picker input for checking the color and its code.
     <input type="text" name="custom_color" placeholder="#FFFFFF" id="pickcolor" class="call-picker" />
     <!-- <label for="colorpicker">Color Picker:</label> -->
     <input type="color" id="colorpicker2" class="colorpreview" value="#FFFFFF">
+//if apply button is clicked, the color of the brush will be changed with updated HEX code.
     <button id="color-btn" class="abBtn">Apply</button>
   <br>
+	    
+//default size of the bruch is 30px, and user can change it to one's desirable size.
   <input type="text" name="radius" placeholder="30" id="pickradius" class="radius-picker" />
   <button id="radius-btn">Change radius</button>
 </div>
 </div>
+	  
+//refresh the background for a reset.
 <button id="resetCanvas-btn" class="reBtn">Reset the Canvas</button>
   <main>
   </main>
+	  
+//p5 sketch comes here.
   <div class="center">
     <script src="sketch.js"></script>
   </div>
