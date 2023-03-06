@@ -271,4 +271,6 @@ const submitReview = (e) => {
   
   document.getElementById('text').addEventListener('keyup', submitReview);
   document.getElementById('sentiment-form').addEventListener('submit', submitReview);
+
+//https://www.npmjs.com/package/sentiment
   
